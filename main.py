@@ -260,6 +260,18 @@ class Game:
                 if event.key == pg.K_n:
                     self.night = not self.night
 
+    def wait_for_key(self):
+        pg.event.wait()
+        waiting = True
+        while waiting:
+            self.clock.tick(FPS)
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    waiting = False
+                    self.quit()
+                if event.type == pg.KEYUP:
+                    waiting = False
+
     def show_start_screen(self):
         self.screen.fill(BLACK)
         self.draw_text("W or UP - Move forward", self.title_font, 20, WHITE,
@@ -291,18 +303,6 @@ class Game:
                         WIDTH / 2, HEIGHT * 3 / 4, align="center")
         pg.display.flip()
         self.wait_for_key()
-    
-    def wait_for_key(self):
-        pg.event.wait()
-        waiting = True
-        while waiting:
-            self.clock.tick(FPS)
-            for event in pg.event.get():
-                if event.type == pg.QUIT:
-                    waiting = False
-                    self.quit()
-                if event.type == pg.KEYUP:
-                    waiting = False
 
 g = Game()
 g.show_start_screen()
