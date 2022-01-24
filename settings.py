@@ -17,7 +17,6 @@ CYAN = (0, 255, 255)
 WIDTH = 1024
 HEIGHT = 768
 FPS = 60
-BGCOLOR = LIGHTGREY
 TILESIZE = 64
 GRIDWIDTH = WIDTH/TILESIZE
 GRIDHEIGHT = HEIGHT/TILESIZE
@@ -41,11 +40,25 @@ BULLET_DAMAGE = 10
 
 # mob settings
 MOB_IMG = 'mob_sprite.png'
-MOB_SPEED = 150
+MOB_SPEEDS = [125, 150, 175, 200]
 MOB_HIT_RECT = pg.Rect(0, 0, 30, 30)
 MOB_HEALTH = 100
 MOB_DAMAGE = 10
 MOB_KNOCKBACK = 20
+AVOID_RADIUS = 50
 
-# environment settings
-WALL_IMG = 'wall_sprite.png'
+# effects
+MUZZLE_FLASHES = ['white_puff1.png', 'white_puff2.png', 'white_puff3.png', 'white_puff4.png']
+FLASH_DURATION = 40
+
+# layers
+WALL_LAYER = 1
+PLAYER_LAYER = 2
+BULLET_LAYER = 3
+MOB_LAYER = 1
+EFFECTS_LAYER = 4
+ITEMS_LAYER = 1
+
+# items
+ITEM_IMAGES = {'health': 'health_pack.png'}
+HEALTH_PACK_AMOUNT = 20
