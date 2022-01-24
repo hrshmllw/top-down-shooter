@@ -26,7 +26,7 @@ PLAYER_SPEED = 300
 PLAYER_ROT_SPEED = 250
 PLAYER_IMG = 'player_sprite.png'
 PLAYER_HIT_RECT = pg.Rect(0, 0, 35, 35)
-BARREL_OFFSET = vec(30, 0)
+BARREL_OFFSET = vec(25, 10)
 
 # gun settings
 BULLET_IMG = 'projectile.png'
