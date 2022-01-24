@@ -1,4 +1,5 @@
 ## Introduction
+A simple top-down shooter with the simple goal of eliminating all the enemies in the map
 
 ## Prerequisite
 - Download and install the latest version of Python (v3.9)
