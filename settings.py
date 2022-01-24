@@ -29,14 +29,25 @@ PLAYER_HIT_RECT = pg.Rect(0, 0, 35, 35)
 BARREL_OFFSET = vec(25, 10)
 PLAYER_HEALTH = 100
 
-# gun settings
+# weapon settings
 BULLET_IMG = 'projectile.png'
-BULLET_SPEED = 500
-BULLET_LIFETIME = 1000
-BULLET_RATE = 300
-RECOIL = 100
-GUN_SPREAD = 5
-BULLET_DAMAGE = 10
+WEAPONS = {}
+WEAPONS['pistol'] = {'bullet_speed': 500,
+                    'bullet_lifetime': 1000,
+                    'bullet_rate': 250,
+                    'recoil': 100,
+                    'bullet_spread': 5,
+                    'bullet_damage': 10,
+                    'bullet_size': 'lg',
+                    'bullet_count': 1}
+WEAPONS['shotgun'] = {'bullet_speed': 650,
+                    'bullet_lifetime': 400,
+                    'bullet_rate': 1100,
+                    'recoil': 300,
+                    'bullet_spread': 20,
+                    'bullet_damage': 5,
+                    'bullet_size': 'sm',
+                    'bullet_count': 12}
 
 # mob settings
 MOB_IMG = 'mob_sprite.png'
@@ -52,6 +63,12 @@ SPLAT = 'mob_splat.png'
 # effects
 MUZZLE_FLASHES = ['white_puff1.png', 'white_puff2.png', 'white_puff3.png', 'white_puff4.png']
 FLASH_DURATION = 40
+DAMAGE_ALPHA = [i for i in range(0, 255, 55)]
+
+# environment
+NIGHT_COLOR = (20, 20, 20)
+LIGHT_RADIUS = (500, 500)
+LIGHT_MASK = 'light.png'
 
 # layers
 WALL_LAYER = 1
@@ -62,7 +79,8 @@ EFFECTS_LAYER = 4
 ITEMS_LAYER = 1
 
 # items
-ITEM_IMAGES = {'health': 'health_pack.png'}
+ITEM_IMAGES = {'health': 'health_pack.png',
+                'shotgun': 'obj_shotgun.png'}
 HEALTH_PACK_AMOUNT = 20
 BOB_RANGE = 15
 BOB_SPEED = 0.4
@@ -76,6 +94,8 @@ MOB_NOISE_SOUNDS = ['mob/noise1.wav', 'mob/noise2.wav', 'mob/noise3.wav',
                     'mob/noise4.wav', 'mob/noise5.wav']
 MOB_HIT_SOUNDS = ['mob_hit.wav']
 MOB_DEATH_SOUNDS = ['mob_death.wav']
-WEAPON_SOUNDS = ['weapon_shot.wav']
+WEAPON_SOUNDS = {'pistol': ['pistol.wav'],
+                'shotgun': ['shotgun.wav']}
 EFFECT_SOUNDS = {'level_start': 'level_start.wav',
-                'health_up': 'health_pack.wav'}
+                'health_up': 'health_pack.wav',
+                'gun_pickup': 'gun_pickup.wav'}
