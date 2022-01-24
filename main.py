@@ -5,24 +5,6 @@ from settings import *
 from sprites import *
 from tilemap import *
 
-# HUD for player health
-def draw_player_health(surf, x, y, pct):
-    if pct < 0:
-        pct = 0
-    BAR_LENGTH = 100
-    BAR_HEIGHT = 20
-    fill = pct * BAR_LENGTH
-    outline_rect = pg.Rect(x, y, BAR_LENGTH, BAR_HEIGHT)
-    fill_rect = pg.Rect(x, y, fill, BAR_HEIGHT)
-    if pct > 0.7:
-        col = GREEN
-    elif pct > 0.35:
-        col = YELLOW
-    else:
-        col = RED
-    pg.draw.rect(surf, col, fill_rect)
-    pg.draw.rect(surf, WHITE, outline_rect, 2)
-
 # game class
 class Game:
     def __init__(self):
@@ -219,6 +201,23 @@ class Game:
         self.fog.blit(self.light_mask, self.light_rect)
         self.screen.blit(self.fog, (0, 0), special_flags=pg.BLEND_MULT)
 
+    def draw_player_health(self, surf, x, y, pct):
+        if pct < 0:
+            pct = 0
+        BAR_LENGTH = 100
+        BAR_HEIGHT = 20
+        fill = pct * BAR_LENGTH
+        outline_rect = pg.Rect(x, y, BAR_LENGTH, BAR_HEIGHT)
+        fill_rect = pg.Rect(x, y, fill, BAR_HEIGHT)
+        if pct > 0.7:
+            col = GREEN
+        elif pct > 0.35:
+            col = YELLOW
+        else:
+            col = RED
+        pg.draw.rect(surf, col, fill_rect)
+        pg.draw.rect(surf, WHITE, outline_rect, 2)
+
     def draw(self):
         pg.display.set_caption("{:.2f}".format(self.clock.get_fps()))
         self.screen.blit(self.map_img, self.camera.apply_rect(self.map_rect))
@@ -235,9 +234,8 @@ class Game:
             self.draw_grid()
         if self.night:
             self.render_fog()
-        
         # player HUD
-        draw_player_health(self.screen, 10, 10, self.player.health / PLAYER_HEALTH)
+        self.draw_player_health(self.screen, 10, 10, self.player.health / PLAYER_HEALTH)
 
         self.draw_text('Enemies: {}'.format(len(self.mobs)), self.title_font, 30, WHITE,
                         WIDTH - 10, 10, align="ne")

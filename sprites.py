@@ -2,10 +2,13 @@ import pygame as pg
 from random import uniform, choice, randint, random
 from pygame.constants import DROPTEXT
 from settings import *
-from tilemap import collide_hit_rect
+from tilemap import *
 import pytweening as tween
 from itertools import chain
 vec = pg.math.Vector2
+
+def collide_hit_rect(one, two):
+    return one.hit_rect.colliderect(two.rect)
 
 def collide_with_walls(sprite, group, dir):
     if dir == 'x':
