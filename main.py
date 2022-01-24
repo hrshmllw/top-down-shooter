@@ -202,7 +202,7 @@ class Game:
         hits = pg.sprite.groupcollide(self.mobs, self.bullets, False, True)
         for mob in hits:
             choice(self.mob_hit_sounds).play()
-            for bullet in hits[hit]:
+            for bullet in hits[mob]:
                 mob.health -= bullet.damage
             mob.vel = vec(0, 0)
 
@@ -263,7 +263,27 @@ class Game:
                     self.night = not self.night
 
     def show_start_screen(self):
-        pass
+        self.screen.fill(BLACK)
+        self.draw_text("W or UP - Move forward", self.title_font, 20, WHITE,
+                        WIDTH / 2, HEIGHT * 1 / 10 , align="center")
+        self.draw_text("A/D or LEFT/RIGHT - Turn left/right", self.title_font, 20, WHITE,
+                        WIDTH / 2, HEIGHT * 2 / 10 , align="center")
+        self.draw_text("S or DOWN - Move backward", self.title_font, 20, WHITE,
+                        WIDTH / 2, HEIGHT * 3 / 10 , align="center")
+        self.draw_text("SPACE - Shoot", self.title_font, 20, WHITE,
+                        WIDTH / 2, HEIGHT * 4 / 10 , align="center")
+        self.draw_text("N - Toggle night mode", self.title_font, 20, WHITE,
+                        WIDTH / 2, HEIGHT * 5 / 10 , align="center")
+        self.draw_text("G - Toggle grid mode", self.title_font, 20, WHITE,
+                        WIDTH / 2, HEIGHT * 6 / 10 , align="center")
+        self.draw_text("H - Toggle hit boxes", self.title_font, 20, WHITE,
+                        WIDTH / 2, HEIGHT * 7 / 10 , align="center")
+        self.draw_text("ESC - Quit game", self.title_font, 20, WHITE,
+                        WIDTH / 2, HEIGHT * 8 / 10 , align="center")
+        self.draw_text("Press any key to start game", self.title_font, 35, WHITE,
+                        WIDTH / 2, HEIGHT * 9 / 10, align="center")
+        pg.display.flip()
+        self.wait_for_key()
 
     def show_go_screen(self):
         self.screen.fill(BLACK)
