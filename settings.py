@@ -33,7 +33,7 @@ PLAYER_HEALTH = 100
 BULLET_IMG = 'projectile.png'
 BULLET_SPEED = 500
 BULLET_LIFETIME = 1000
-BULLET_RATE = 150
+BULLET_RATE = 300
 RECOIL = 100
 GUN_SPREAD = 5
 BULLET_DAMAGE = 10
@@ -46,6 +46,8 @@ MOB_HEALTH = 100
 MOB_DAMAGE = 10
 MOB_KNOCKBACK = 20
 AVOID_RADIUS = 50
+DETECT_RADIUS = 400
+SPLAT = 'mob_splat.png'
 
 # effects
 MUZZLE_FLASHES = ['white_puff1.png', 'white_puff2.png', 'white_puff3.png', 'white_puff4.png']
@@ -62,3 +64,18 @@ ITEMS_LAYER = 1
 # items
 ITEM_IMAGES = {'health': 'health_pack.png'}
 HEALTH_PACK_AMOUNT = 20
+BOB_RANGE = 15
+BOB_SPEED = 0.4
+
+# sounds and music
+BG_MUSIC = 'bgm.ogg'
+PLAYER_HIT_SOUNDS = ['player/hit_1.wav', 'player/hit_2.wav',
+                    'player/hit_3.wav', 'player/hit_4.wav',
+                    'player/hit_5.wav', 'player/hit_6.wav', 'player/hit_7.wav']
+MOB_NOISE_SOUNDS = ['mob/noise1.wav', 'mob/noise2.wav', 'mob/noise3.wav',
+                    'mob/noise4.wav', 'mob/noise5.wav']
+MOB_HIT_SOUNDS = ['mob_hit.wav']
+MOB_DEATH_SOUNDS = ['mob_death.wav']
+WEAPON_SOUNDS = ['weapon_shot.wav']
+EFFECT_SOUNDS = {'level_start': 'level_start.wav',
+                'health_up': 'health_pack.wav'}

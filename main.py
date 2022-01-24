@@ -32,22 +32,63 @@ class Game:
         self.load_data()
 
     def load_data(self):
+        # folder loading
         game_folder = path.dirname(__file__)
         img_folder = path.join(game_folder, 'img')
+        sound_folder = path.join(game_folder, 'sound')
+        music_folder = path.join(game_folder, 'music')
         map_folder = path.join(game_folder, 'maps')
+        # tilemap load
         self.map = TiledMap(path.join(map_folder, 'tilemap1.tmx'))
         self.map_img = self.map.make_map()
         self.map_rect = self.map_img.get_rect()
+        # sprite images load
         self.player_img = pg.image.load(path.join(img_folder, PLAYER_IMG)).convert_alpha()
         self.bullet_img = pg.image.load(path.join(img_folder, BULLET_IMG)).convert_alpha()
         self.mob_img = pg.image.load(path.join(img_folder, MOB_IMG)).convert_alpha()
+        self.splat = pg.image.load(path.join(img_folder, SPLAT)).convert_alpha()
+        self.splat = pg.transform.scale(self.splat, (64, 64))
+        # gun shot effects
         self.gun_flashes = []
         for img in MUZZLE_FLASHES:
             self.gun_flashes.append(pg.image.load(path.join(img_folder, img)).convert_alpha())
         self.item_images = {}
         for item in ITEM_IMAGES:
             self.item_images[item] = pg.image.load(path.join(img_folder, ITEM_IMAGES[item])).convert_alpha()
-
+        # sound load
+        pg.mixer.music.load(path.join(music_folder, BG_MUSIC))
+        self.effects_sounds = {}
+        for type in EFFECT_SOUNDS:
+            game_sfx = pg.mixer.Sound(path.join(sound_folder, EFFECT_SOUNDS[type]))
+            game_sfx.set_volume(0.2)
+            self.effects_sounds[type] = game_sfx
+        self.weapon_sounds = {}
+        self.weapon_sounds['gun'] = []
+        for sound in WEAPON_SOUNDS:
+            gun_sfx = pg.mixer.Sound(path.join(sound_folder, sound))
+            gun_sfx.set_volume(0.2)
+            self.weapon_sounds['gun'].append(gun_sfx)
+        self.mob_sounds = []
+        for sound in MOB_NOISE_SOUNDS:
+            mob_sfx = pg.mixer.Sound(path.join(sound_folder, sound))
+            mob_sfx.set_volume(0.2)
+            self.mob_sounds.append(mob_sfx)
+        self.player_hit_sounds = []
+        for sound in PLAYER_HIT_SOUNDS:
+            player_sfx = pg.mixer.Sound(path.join(sound_folder, sound))
+            player_sfx.set_volume(0.2)
+            self.player_hit_sounds.append(player_sfx)
+        self.mob_hit_sounds = []
+        for sound in MOB_HIT_SOUNDS:
+            mob_hit_sfx = pg.mixer.Sound(path.join(sound_folder, sound))
+            mob_hit_sfx.set_volume(0.2)
+            self.mob_hit_sounds.append(mob_hit_sfx)
+        self.mob_death_sounds = []
+        for sound in MOB_DEATH_SOUNDS:
+            mob_death_sfx = pg.mixer.Sound(path.join(sound_folder, sound))
+            mob_death_sfx.set_volume(0.2)
+            self.mob_death_sounds.append(mob_death_sfx)
+        
     def new(self):
         self.all_sprites = pg.sprite.LayeredUpdates()
         self.walls = pg.sprite.Group()
@@ -67,10 +108,12 @@ class Game:
                 Item(self, obj_center, tile_object.name)
         self.camera = Camera(self.map.width, self.map.height)
         self.draw_debug = False
+        self.effects_sounds['level_start'].play()
 
     def run(self):
         # game loop - set self.playing = False to end the game
         self.playing = True
+        pg.mixer.music.play(loops=-1)
         while self.playing:
             self.dt = self.clock.tick(FPS) / 1000
             self.events()
@@ -89,10 +132,13 @@ class Game:
         for hit in hits:
             if hit.type == 'health' and self.player.health < PLAYER_HEALTH:
                 hit.kill()
+                self.effects_sounds['health_up'].play()
                 self.player.add_health(HEALTH_PACK_AMOUNT)
         # mobs hit player
         hits = pg.sprite.spritecollide(self.player, self.mobs, False, collide_hit_rect)
         for hit in hits:
+            if random() < 0.7:
+                choice(self.player_hit_sounds).play()
             self.player.health -= MOB_DAMAGE
             hit.vel = vec(0, 0)
             if self.player.health <= 0:
@@ -102,6 +148,7 @@ class Game:
         # bullets hit mobs
         hits = pg.sprite.groupcollide(self.mobs, self.bullets, False, True)
         for hit in hits:
+            choice(self.mob_hit_sounds).play()
             hit.health -= BULLET_DAMAGE
             hit.vel = vec(0, 0)
 
